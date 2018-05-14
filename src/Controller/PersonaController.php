@@ -1,45 +1,63 @@
 <?php
 
 namespace App\Controller;
-
 use Symfony\Component\HttpFoundation\Request;
-use App\Entity\Persona;
-use App\Form\PersonaType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Entity\Persona;
+use App\Form\PersonaType;
 
-	/**
+/**
      * @Route("/persona")
      */
 
+
 class PersonaController extends Controller
 {
+
     /**
-     * @Route("/nuevo", name="persona_nuevo")
+     * @Route("/lista", name="persona_lista")
      */
-    public function index(Request $request)
+    public function listado()
     {
-    	$persona = new persona();
-    	$formu = $this->createForm(PersonaType::class, $persona);
-    	$formu->handleRequest($request);
+        $repo = $this->getDoctrine()->getRepository(Persona::class);
 
-    	if ($formu->isSubmitted()) {
+        $vectorpersona = $repo->findAll();
 
-    		$nombre = $request->request->get('nombre');
-    		$edad = $request->request->get('edad');
-    		$telefono = $request->request->get('telefono');
 
-    		dump ($nombre);
-    		dump ($edad);
-    		dump ($telefono);
-    		dump ($persona);
 
-    		return $this->render('persona/final.html.twig', [
-        	]);
-    	}
+        dump ($vectorpersona);
 
         return $this->render('persona/index.html.twig', [
-            'formulario' => $formu->createView(),
+            'vectorpersona' => $vectorpersona,
         ]);
     }
+
+/**
+     * @Route("/nuevo", name="persona_nuevo")
+     */
+
+    public function nuevo(Request $request)
+    {
+        $persona = new Persona();
+        $formu = $this->createForm(PersonaType::class, $persona);
+        $formu->handleRequest($request);
+
+        if ($formu->isSubmitted()) {
+
+        
+
+            dump ($persona);
+    
+
+        return $this->render('persona/final.html.twig', [
+            ]);
+        }
+
+
+        return $this->render('persona/nuevo.html.twig', [
+            'formulario' => $formu->createView()
+        ]);
+    }
+
 }

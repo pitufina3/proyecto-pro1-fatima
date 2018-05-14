@@ -15,32 +15,21 @@ use App\Form\PerroType;
 class PerroController extends Controller
 {
 
-	private $vectorperros = array();
-
-	private function cargardatos (){
-		$this->vectorperros[] = (new Perro())->setNombre("Lassie")->setRaza("Labrador")->setEdad("2");
-		$this->vectorperros[] = (new Perro())->setNombre("Curro")->setRaza("Collie")->setEdad("4");
-		$this->vectorperros[] = (new Perro())->setNombre("Cobbie")->setRaza("Chiguagua")->setEdad("8");
-
-
-		$p1 = new Perro();
-		$p1->setNombre ("Trumpy");
-		$p1->setRaza("AlaskaMalamute");
-		$p1->setEdad("2");
-		$this->vectorperros[] = $p1;
-	}
-
     /**
-     * @Route("/lista", name="perro")
+     * @Route("/lista", name="perro_lista")
      */
     public function listado()
     {
+        $repo = $this->getDoctrine()->getRepository(Perro::class);
 
-    	$this->cargarDatos();
-    	dump ($this->vectorperros);
+        $vectorperros = $repo->findAll();
+
+
+
+    	dump ($vectorperros);
 
         return $this->render('perro/index.html.twig', [
-            'vectorperros' => $this->vectorperros,
+            'vectorperros' => $vectorperros,
         ]);
     }
 
