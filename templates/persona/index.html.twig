@@ -1,15 +1,12 @@
-{% endblock %}
-
-
 {% extends 'base.html.twig' %}
 
 
 {% block body %}
 
-<h1>Listado de amigos persona</h1>
+<h1>Listado de personas</h1>
 <ul>
-    {% for persona in vectorpersonas %}
-        <li>{{ persona.nombre }} - {{ persona.edad}} - {{persona.telefono}}</li>
+    {% for persona in personas %}
+        <li>{{ persona.nombre }} - {{ persona.edad }} - {{persona.telefono}} - {{persona.ciudad}}</li>
     {% endfor %}
 </ul>
 

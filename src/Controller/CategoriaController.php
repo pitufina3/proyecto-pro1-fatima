@@ -3,59 +3,59 @@
 namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use App\Entity\Persona;
-use App\Form\PersonaType;
+use App\Entity\Categoria;
+use App\Form\CategoriaType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
     /**
-     * @Route("/persona")
+     * @Route("/categoria")
      */
 
-class PersonaController extends Controller
+class CategoriaController extends Controller
 {
     /**
-     * @Route("/nuevo", name="persona_nuevo")
+     * @Route("/nuevo", name="categoria_nuevo")
      */
     public function index(Request $request)
     {
-        $persona = new Persona();
-        $formu = $this->createForm(PersonaType::class, $persona);
+        $categoria = new Categoria();
+        $formu = $this->createForm(CategoriaType::class, $categoria);
         $formu->handleRequest($request);
 
         if ($formu->isSubmitted()) {
 
             $em = $this->getDoctrine()->getManager();
 
-            $em->persist($persona);
+            $em->persist($categoria);
 
             $em->flush();
 
-            return $this->redirectToRoute('persona_lista');
+            return $this->redirectToRoute('categoria_lista');
         }
 
-        return $this->render('persona/nuevo.html.twig', [
+        return $this->render('categoria/nuevo.html.twig', [
             'formulario' => $formu->createView(),
         ]);
         
     }
 
     /**
-     * @Route("/lista", name="persona_lista")
+     * @Route("/lista", name="categoria_lista")
      */
     public function listado()
     {
 
         //$this->cargarDatos();
         $repo = $this->getDoctrine()->
-            getRepository (Persona::class);
+            getRepository (Categoria::class);
 
-        $personas = $repo->findAll();    
+        $categorias = $repo->findAll();    
 
      
 
-        return $this->render('persona/index.html.twig', [
-            'personas' => $personas,
+        return $this->render('categoria/index.html.twig', [
+            'categorias' => $categorias,
              
             
         ]);

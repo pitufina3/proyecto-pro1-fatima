@@ -31,6 +31,12 @@ class Persona
      */
     private $telefono;
 
+    
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $ciudad;
+
 
 
     public function getId()
@@ -70,6 +76,19 @@ class Persona
     public function setTelefono(?string $telefono): self
     {
         $this->telefono = $telefono;
+
+        return $this;
+    }
+
+    
+    public function getCiudad(): ?string
+    {
+        return $this->ciudad;
+    }
+
+    public function setCiudad(string $ciudad): self
+    {
+        $this->ciudad = $ciudad;
 
         return $this;
     }
