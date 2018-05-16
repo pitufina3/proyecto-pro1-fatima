@@ -19,16 +19,25 @@ class ProductoType extends AbstractType
              'empty_data' => 'Nombre',
              'attr' => array(
                 'class'=> 'campos'
-             )
-         ))
+            )
+        ))
 
             ->add('nombre')
             ->add('precio')
+            ->add('categoria',EntityType::class,array(
+
+                'class' => Categoria::class,
+
+                'choice_label' => function ($categoria) {
+
+                    return $categoria->getNombre();
+
+            }))
             ->add('save', SubmitType::class, array(
                 'attr' => array('class' => 'btn btn-success'),
 
-));
-        ;
+        ));
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

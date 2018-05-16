@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+<h1>Listado de libros</h1>
+<ul>
+    {% for libro in libros %}
+        <li>{{ libro.titulo }} - {{ libro.edicion }} - {{libro.numpaginas}}</li>
+    {% endfor %}
+</ul>
+
+<a href="{{ path('libro_nuevo') }}">Añadir libro</a>
+
+{% endblock %}
+

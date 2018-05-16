@@ -3,26 +3,21 @@
 namespace App\Form;
 
 
-use App\Entity\Categoria;
+use App\Entity\Libro;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CategoriaType extends AbstractType
+class LibroType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombre', null, array(
-             'required' => true,
-             'empty_data' => 'Nombre',
-             'attr' => array(
-                'class'=> 'campos'
-            )
-        ))
-
-            ->add('nombre')
+            
+            ->add('titulo')
+            ->add('edicion')
+            ->add('numpaginas')
             ->add('save', SubmitType::class, array(
                 'attr' => array('class' => 'btn btn-success'),
 
@@ -32,7 +27,7 @@ class CategoriaType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Categoria::class,
+            'data_class' => Libro::class,
         ]);
     }
 }

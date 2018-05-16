@@ -49,8 +49,7 @@ class PizzaController extends Controller
                 [
                     'localidades' => $vectorlocalidades
 
-                    ]
-            );
+                ]);
     }
 
 
@@ -61,11 +60,10 @@ class PizzaController extends Controller
 
     {
 
-        return $this->render('pizza/mostrar.html.twig');
+        return $this->render('pizza/mostrar.html.twig', [
+
+            ]);
     }
-
-
-
 
 
      /**

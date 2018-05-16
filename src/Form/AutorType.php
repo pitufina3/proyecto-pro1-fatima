@@ -3,13 +3,13 @@
 namespace App\Form;
 
 
-use App\Entity\Categoria;
+use App\Entity\Autor;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CategoriaType extends AbstractType
+class AutorType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -22,7 +22,8 @@ class CategoriaType extends AbstractType
             )
         ))
 
-            ->add('nombre')
+            ->add('premio')
+            ->add('edad')
             ->add('save', SubmitType::class, array(
                 'attr' => array('class' => 'btn btn-success'),
 
@@ -32,7 +33,7 @@ class CategoriaType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Categoria::class,
+            'data_class' => Autor::class,
         ]);
     }
 }

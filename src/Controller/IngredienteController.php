@@ -53,7 +53,8 @@ class IngredienteController extends Controller
 
     {
 
-        return $this->render('ingrediente/mostrar.html.twig');
+        return $this->render('ingrediente/mostrar.html.twig', [
+        ]);
     }
 
 }

@@ -19,8 +19,8 @@ class PersonaType extends AbstractType
              'empty_data' => 'Nombre',
              'attr' => array(
                 'class'=> 'campos'
-             )
-         ))
+            )
+        ))
 
             ->add('edad')
             ->add('telefono')
@@ -28,8 +28,7 @@ class PersonaType extends AbstractType
             ->add('save', SubmitType::class, array(
                 'attr' => array('class' => 'btn btn-success'),
 
-));
-        ;
+        ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

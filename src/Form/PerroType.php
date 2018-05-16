@@ -18,8 +18,7 @@ class PerroType extends AbstractType
             ->add('raza')
             ->add('save', SubmitType::class, array(
                 'attr' => array('class' => 'btn btn-success'),
-            ))
-      ;
+        ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

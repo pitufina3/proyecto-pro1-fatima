@@ -6,13 +6,13 @@
 <h1>Listado de productos</h1>
 <ul>
     {% for producto in productos %}
-        <li>{{ producto.nombre }} - {{ producto.precio }} - {{ producto.categoria.nombre }} {{ dump(producto.categoria)}}
+        <li>{{ producto.nombre }} - {{ producto.precio }} - {{ producto.categoria.nombre }} {#{{ dump(producto.categoria)}} #}
 </li>
     {% endfor %}
 </ul>
 
 
-{{ dump(productos) }}
+{#{{ dump(productos) }}#}
 
 
 <a href="{{ path('producto_nuevo') }}">Añadir producto</a>

@@ -3,59 +3,59 @@
 namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use App\Entity\Producto;
-use App\Form\ProductoType;
+use App\Entity\Autor;
+use App\Form\AutorType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
     /**
-     * @Route("/producto")
+     * @Route("/autor")
      */
 
-class ProductoController extends Controller
+class AutorController extends Controller
 {
     /**
-     * @Route("/nuevo", name="producto_nuevo")
+     * @Route("/nuevo", name="autor_nuevo")
      */
     public function index(Request $request)
     {
-        $producto = new Producto();
-        $formu = $this->createForm(ProductoType::class, $producto);
+        $autor = new Autor();
+        $formu = $this->createForm(AutorType::class, $autor);
         $formu->handleRequest($request);
 
         if ($formu->isSubmitted()) {
 
             $em = $this->getDoctrine()->getManager();
 
-            $em->persist($producto);
+            $em->persist($autor);
 
             $em->flush();
 
-            return $this->redirectToRoute('producto_lista');
+            return $this->redirectToRoute('autor_lista');
         }
 
-        return $this->render('producto/nuevo.html.twig', [
+        return $this->render('autor/nuevo.html.twig', [
             'formulario' => $formu->createView(),
         ]);
         
     }
 
     /**
-     * @Route("/lista", name="producto_lista")
+     * @Route("/lista", name="autor_lista")
      */
     public function listado()
     {
 
         //$this->cargarDatos();
         $repo = $this->getDoctrine()->
-            getRepository (Producto::class);
+            getRepository (Autor::class);
 
-        $productos = $repo->findAll();    
+        $autores = $repo->findAll();    
 
      
 
-        return $this->render('producto/index.html.twig', [
-            'productos' => $productos,
+        return $this->render('autor/index.html.twig', [
+            'autores' => $autores,
              
             
         ]);
