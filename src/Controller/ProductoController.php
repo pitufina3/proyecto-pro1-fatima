@@ -43,7 +43,7 @@ class ProductoController extends Controller
     /**
      * @Route("/lista", name="producto_lista")
      */
-    public function listado()
+    public function listado(Request $request)
     {
 
         //$this->cargarDatos();
@@ -52,10 +52,15 @@ class ProductoController extends Controller
 
         $productos = $repo->findAll();    
 
+        $producto = new Producto();
+        $formu = $this->createForm(ProductoType::class, $producto);
+        $formu->handleRequest($request);
+
      
 
         return $this->render('producto/index.html.twig', [
             'productos' => $productos,
+            'formulario' => $formu->createView()
              
             
         ]);
