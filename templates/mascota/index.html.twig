@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+<h1>Listado de mascotas</h1>
+<ul>
+    {% for mascota in mascotas %}
+        <li>{{ mascota.nombre }} - {{ mascota.animal }} - {{mascota.fechanac | date("m/d/Y")}} - {{ mascota.consultas }}</li>
+    {% endfor %}
+</ul>
+
+<a href="{{ path('mascota_nuevo') }}">Añadir mascota</a>
+
+{% endblock %}
+
