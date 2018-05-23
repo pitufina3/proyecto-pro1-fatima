@@ -60,27 +60,4 @@ class ClienteController extends Controller
             
         ]);
     }
-    /**
-     * @Route("/detalle", name="cliente_detalle")
-     */
-    public function detalle()
-    {
-
-        //$this->cargarDatos();
-        $repo = $this->getDoctrine()->
-            getRepository (Cliente::class);
-
-        $clientes = $repo->findAll();    
-
-     
-
-        return $this->render('cliente/detalle.html.twig', [
-            'clientes' => $clientes,
-             
-            
-        ]);
-    }
-
-
-
 }

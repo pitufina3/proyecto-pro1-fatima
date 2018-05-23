@@ -6,7 +6,7 @@
 <h1>Listado de mascotas</h1>
 <ul>
     {% for mascota in mascotas %}
-        <li>{{ mascota.nombre }} - {{ mascota.animal }} - {{mascota.fechanac | date("m/d/Y")}} - {{ mascota.consultas }}</li>
+        <li>{{ mascota.nombre }} - {{ mascota.animal }} - {{ mascota.fechanac|date("m/d/Y")}} </li>
     {% endfor %}
 </ul>
 

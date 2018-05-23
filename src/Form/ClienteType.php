@@ -4,7 +4,6 @@ namespace App\Form;
 
 
 use App\Entity\Cliente;
-use App\Entity\Mascota;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,11 +14,18 @@ class ClienteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombre')
+            ->add('nombre', null, array(
+             'required' => true,
+             'empty_data' => 'Nombre',
+             'attr' => array(
+                'class'=> 'campos'
+            )
+        ))
+
             ->add('direccion')
             ->add('cp')
             ->add('ciudad')
-            ->add('save', SubmitType::class, array(
+            ->add('consultar', SubmitType::class, array(
                 'attr' => array('class' => 'btn btn-success'),
 
         ));

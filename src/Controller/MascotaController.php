@@ -60,4 +60,23 @@ class MascotaController extends Controller
             
         ]);
     }
+
+    public function detalle()
+    {
+
+        //$this->cargarDatos();
+        $repo = $this->getDoctrine()->
+            getRepository (Mascota::class);
+
+        $mascotas = $repo->findAll();    
+
+     
+
+        return $this->render('mascota/detalle.html.twig', [
+            'mascotas' => $mascotas,
+             
+            
+        ]);
+    }
+
 }
