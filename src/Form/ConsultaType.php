@@ -1,14 +1,9 @@
 <?php
-
 namespace App\Form;
-
-
 use App\Entity\Consulta;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
 class ConsultaType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -18,12 +13,9 @@ class ConsultaType extends AbstractType
             ->add('fechahora')
             ->add('descripcion')
             ->add('importe')
-            ->add('consultar', SubmitType::class, array(
-                'attr' => array('class' => 'btn btn-success'),
-
-        ));
+            ->add('mascota')
+        ;
     }
-
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -31,4 +23,3 @@ class ConsultaType extends AbstractType
         ]);
     }
 }
-

@@ -1,82 +1,48 @@
 <?php
-
 namespace App\Controller;
-
-use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Mascota;
 use App\Form\MascotaType;
-use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\MascotaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-    /**
-     * @Route("/mascota")
-     */
-
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+/**
+ * @Route("/mascota")
+ */
 class MascotaController extends Controller
 {
     /**
-     * @Route("/nuevo", name="mascota_nuevo")
+     * @Route("/", name="mascota_index", methods="GET")
      */
-    public function index(Request $request)
+    public function index(MascotaRepository $mascotaRepository): Response
     {
-        $mascota = new Mascota();
-        $formu = $this->createForm(MascotaType::class, $mascota);
-        $formu->handleRequest($request);
-
-        if ($formu->isSubmitted()) {
-
-            $em = $this->getDoctrine()->getManager();
-
-            $em->persist($mascota);
-
-            $em->flush();
-
-            return $this->redirectToRoute('mascota_lista');
-        }
-
-        return $this->render('mascota/nuevo.html.twig', [
-            'formulario' => $formu->createView(),
-        ]);
-        
+        return $this->render('mascota/index.html.twig', ['mascotas' => $mascotaRepository->findAll()]);
     }
-
     /**
-     * @Route("/lista", name="mascota_lista")
+     * @Route("/new", name="mascota_new", methods="GET|POST")
      */
-    public function listado()
+    public function new(Request $request): Response
     {
-
-        //$this->cargarDatos();
-        $repo = $this->getDoctrine()->
-            getRepository (Mascota::class);
-
-        $mascotas = $repo->findAll();    
-
-     
-
-        return $this->render('mascota/index.html.twig', [
-            'mascotas' => $mascotas,
-             
-            
+        $mascotum = new Mascota();
+        $form = $this->createForm(MascotaType::class, $mascotum);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($mascotum);
+            $em->flush();
+            return $this->redirectToRoute('mascota_index');
+        }
+        return $this->render('mascota/new.html.twig', [
+            'mascotum' => $mascotum,
+            'form' => $form->createView(),
         ]);
     }
-
-    public function detalle()
+    /**
+     * @Route("/{id}", name="mascota_show", methods="GET")
+     */
+    public function show(Mascota $mascotum): Response
     {
-
-        //$this->cargarDatos();
-        $repo = $this->getDoctrine()->
-            getRepository (Mascota::class);
-
-        $mascotas = $repo->findAll();    
-
-     
-
-        return $this->render('mascota/detalle.html.twig', [
-            'mascotas' => $mascotas,
-             
-            
-        ]);
+        return $this->render('mascota/show.html.twig', ['mascotum' => $mascotum]);
     }
-
 }

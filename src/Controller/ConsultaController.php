@@ -1,63 +1,76 @@
 <?php
-
 namespace App\Controller;
-
-use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Consulta;
 use App\Form\ConsultaType;
-use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\ConsultaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-    /**
-     * @Route("/consulta")
-     */
-
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+/**
+ * @Route("/consulta")
+ */
 class ConsultaController extends Controller
 {
     /**
-     * @Route("/nuevo", name="consulta_nuevo")
+     * @Route("/", name="consulta_index", methods="GET")
      */
-    public function index(Request $request)
+    public function index(ConsultaRepository $consultaRepository): Response
     {
-        $consulta = new Consulta();
-        $formu = $this->createForm(ConsultaType::class, $consulta);
-        $formu->handleRequest($request);
-
-        if ($formu->isSubmitted()) {
-
-            $em = $this->getDoctrine()->getManager();
-
-            $em->persist($consulta);
-
-            $em->flush();
-
-            return $this->redirectToRoute('consulta_lista');
-        }
-
-        return $this->render('consulta/nuevo.html.twig', [
-            'formulario' => $formu->createView(),
-        ]);
-        
+        return $this->render('consulta/index.html.twig', ['consultas' => $consultaRepository->findAll()]);
     }
-
     /**
-     * @Route("/lista", name="consulta_lista")
+     * @Route("/new", name="consulta_new", methods="GET|POST")
      */
-    public function listado()
+    public function new(Request $request): Response
     {
-
-        //$this->cargarDatos();
-        $repo = $this->getDoctrine()->
-            getRepository (Consulta::class);
-
-        $consultas = $repo->findAll();    
-
-     
-
-        return $this->render('consulta/index.html.twig', [
-            'consultas' => $consultas,
-             
-            
+        $consultum = new Consulta();
+        $form = $this->createForm(ConsultaType::class, $consultum);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($consultum);
+            $em->flush();
+            return $this->redirectToRoute('consulta_index');
+        }
+        return $this->render('consulta/new.html.twig', [
+            'consultum' => $consultum,
+            'form' => $form->createView(),
         ]);
+    }
+    /**
+     * @Route("/{id}", name="consulta_show", methods="GET")
+     */
+    public function show(Consulta $consultum): Response
+    {
+        return $this->render('consulta/show.html.twig', ['consultum' => $consultum]);
+    }
+    /**
+     * @Route("/{id}/edit", name="consulta_edit", methods="GET|POST")
+     */
+    public function edit(Request $request, Consulta $consultum): Response
+    {
+        $form = $this->createForm(ConsultaType::class, $consultum);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute('consulta_edit', ['id' => $consultum->getId()]);
+        }
+        return $this->render('consulta/edit.html.twig', [
+            'consultum' => $consultum,
+            'form' => $form->createView(),
+        ]);
+    }
+    /**
+     * @Route("/{id}", name="consulta_delete", methods="DELETE")
+     */
+    public function delete(Request $request, Consulta $consultum): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$consultum->getId(), $request->request->get('_token'))) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($consultum);
+            $em->flush();
+        }
+        return $this->redirectToRoute('consulta_index');
     }
 }

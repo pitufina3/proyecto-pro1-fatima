@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cliente{% endblock %}
+
+{% block body %}
+    <h1>Cliente</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ cliente.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ cliente.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Direccion</th>
+                <td>{{ cliente.direccion }}</td>
+            </tr>
+            <tr>
+                <th>Cp</th>
+                <td>{{ cliente.cp }}</td>
+            </tr>
+            <tr>
+                <th>Ciudad</th>
+                <td>{{ cliente.ciudad }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <p></p>
+    <p></p>
+    <p></p>
+    <h3>Mascotas de este cliente</h3>
+    {% for mascota in cliente.mascotas %}
+        <li>
+            {{ mascota.id }}
+            {{ mascota.nombre }}
+            {{ mascota.animal }}
+            {{ mascota.fechanac ? mascota.fechanac|date('Y-m-d') : '' }}
+            
+            <a href="{{ path('mascota_show', {'id': mascota.id}) }}">Ir al detalle</a>
+        </li>
+
+    {% endfor %}
+
+    <a href="{{ path('cliente_index') }}">Ir a la lista de clientes</a>
+
+{% endblock %}
